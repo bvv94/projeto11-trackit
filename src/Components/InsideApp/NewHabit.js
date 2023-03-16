@@ -5,6 +5,7 @@ export default function Newhabit(){
     return (
         <>
         habit
+        tentativa
         </>
     )
 }
