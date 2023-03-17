@@ -4,7 +4,8 @@ import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import Context from "./Context/Context";
+import {Context} from "../Components/Context/Context"
+import APIAuth from "../API's/APIAuth";
 
 export default function LogIn() {
 
@@ -12,12 +13,12 @@ export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [disabled, setDisabled] = useState(false);
-    // const [user, setUser] = useContext(Context);
-    const [user, setUser] = useState("");
+    const {user, setUser} = useContext(Context);
+    // const [user, setUser] = useState([]);
 
     function login(e) {
 
-        const body = { email, password };
+        const body = { email, password};
 
         e.preventDefault();
         setDisabled(true)
@@ -25,7 +26,7 @@ export default function LogIn() {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body)
 
         promise.then((res) => {
-            console.log(res)
+            console.log(res.data)
             console.log(res.data.name)
             setUser(res.data.name)
             console.log(user)
@@ -35,7 +36,6 @@ export default function LogIn() {
             setDisabled(false)
             alert(err.response.statusText)
         })
-
     }
 
     return (
@@ -59,7 +59,6 @@ export default function LogIn() {
                     </div>
                 </form>
             </Inputs>
-
         </Div>
     )
 }

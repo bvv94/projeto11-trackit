@@ -3,6 +3,7 @@ import React from "react";
 import MenuBottom from "./MenuBottom"
 import styled from "styled-components"
 import { useState } from "react"
+import bin from "../../assets/Vector.png"
 import Newhabit from "./NewHabit";
 
 export default function Today() {
@@ -72,14 +73,33 @@ export default function Today() {
                 </div>
                 <Habits>
                     {empty}
-                    { }
                 </Habits>
+                <AddedHabits>
+                    {/* Inicio Cartão de Hábito */}
+                    <Divaddedhabit>
+                        <Habit>
+                            <p>Habito Informado</p>
+                            <img src={bin} /> 
+                        </Habit>
+
+
+                        <div data-test="habit-day">
+                            <Divmap>
+                                {week.map(day => <Days key={day.number}>{day.day}</Days>)}
+                            </Divmap>
+                        </div>
+                    </Divaddedhabit>
+                </AddedHabits>
             </Body>
             <MenuBottom />
         </Div>
     )
 }
 
+const Habit = styled.div`
+    display: flex;
+    margin-bottom: 10px;
+`
 const Cancelar = styled.button`
     width:84px;
     height: 35px;
@@ -125,6 +145,26 @@ const Divnewhabit = styled.form`
         }
     }
 `
+const Divaddedhabit = styled.form`
+    padding: 18px 18px 18px 18px;
+    width: 340px;
+    height: 91px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    position: absolute;
+
+    img{
+        position: relative;
+        z-index: 1;
+        left: 75%;
+        top: -50%;
+        height: 15px;
+        width: 13px;
+    }
+`
 const Divmap = styled.div`
     margin-bottom: 29px;
 `
@@ -137,6 +177,7 @@ const Days = styled.button`
     border-radius: 5px;
     font-size: 20px;
     color: #DBDBDB;
+    
 `
 const Divbuttons = styled.div`
     width: 303px;
@@ -145,6 +186,7 @@ const Divbuttons = styled.div`
 `
 const Div = styled.div`
     background-color: #e5e5e5;
+    /* margin: 80px auto 70px auto; */
     margin: 80px 0 70px 0;
     width: 375px;
 `
@@ -179,4 +221,9 @@ const Title = styled.div`
     }
 `
 const Habits = styled.div`
+    margin-top: 15px;
+    
+`
+const AddedHabits = styled.div`
+
 `

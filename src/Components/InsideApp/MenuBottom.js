@@ -6,10 +6,10 @@ import 'react-circular-progressbar/dist/styles.css';
 
 export default function MenuBottom() {
 
-    const percentage = 50;
+    const percentage = 30;
 
     return (
-        <div data-test="menu">
+        <MenuB data-test="menu">
             <div data-test="today-link">
                 <Circle>
                     <CircularProgressbar value={percentage} text={`Hoje`}
@@ -24,13 +24,13 @@ export default function MenuBottom() {
                     />
                 </Circle>
             </div>
-            <Div>
+            <DivBottom>
                 <div data-test="habit-link history-link">
                     <StyledLink to="/habitos">Hábitos</StyledLink>
                     <StyledLink to="/historico">Histórico</StyledLink>
                 </div>
-            </Div>
-        </div>
+            </DivBottom>
+        </MenuB>
     )
 }
 
@@ -41,7 +41,7 @@ const Circle = styled.div`
     left: 138px;
     z-index:2;
 `
-const Div = styled.div`
+const DivBottom = styled.div`
     background-color: white;
     position: fixed;
     bottom: 0;
@@ -62,4 +62,13 @@ const Div = styled.div`
 `
 const StyledLink = styled(Link)`
     color: #52B6FF;
+`
+const MenuB = styled.div`
+    background-color: yellow;
+    /* color: green; */
+    margin: 80px auto 70px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
 `
