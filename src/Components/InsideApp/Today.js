@@ -1,18 +1,22 @@
 import Top from "./Top"
-import React from "react";
+import React, { useContext } from "react";
 import MenuBottom from "./MenuBottom"
 import styled from "styled-components"
 import { useState } from "react"
 import bin from "../../assets/Vector.png"
 import Newhabit from "./NewHabit";
+import { CircularContext } from "../Context/CircularContext";
+import { Context } from "../Context/Context";
 
 export default function Today() {
 
     const empty = "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"
     // const [habit, setHabit] = useState("Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!");
     const [habit, setHabit] = useState("");
-    let [counter, setCounter] = useState(0);
+    const {user} = useContext(Context)
+    const [counter, setCounter] = useContext(CircularContext);
     const [add, setAdd] = useState(false)
+    const {circular, setCircular} = useContext(CircularContext)
     const week = [
         { day: 'D', number: 7 },
         { day: 'S', number: 1 },
@@ -85,7 +89,8 @@ export default function Today() {
 
                         <div data-test="habit-day">
                             <Divmap>
-                                {week.map(day => <Days key={day.number}>{day.day}</Days>)}
+                                {week.map(day => <Days key={day.number} onClick={()=>{}}>
+                                                    {day.day}</Days>)}
                             </Divmap>
                         </div>
                     </Divaddedhabit>

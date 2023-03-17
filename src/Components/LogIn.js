@@ -4,38 +4,42 @@ import axios from "axios";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import {Context} from "../Components/Context/Context"
+import { Context } from "../Components/Context/Context"
 import APIAuth from "../API's/APIAuth";
+import { ThreeDots } from "react-loader-spinner"
 
 export default function LogIn() {
 
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [disabled, setDisabled] = useState(false);
-    const {user, setUser} = useContext(Context);
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    const [data, setData] = useState({ email: "", password: "" })
+    const [loading, setLoading] = useState(false)
+    const { user, setUser } = useContext(Context);
     // const [user, setUser] = useState([]);
 
     function login(e) {
 
-        const body = { email, password};
-
         e.preventDefault();
-        setDisabled(true)
+        setLoading(true)
         console.log(user)
-        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body)
 
-        promise.then((res) => {
-            console.log(res.data)
-            console.log(res.data.name)
-            setUser(res.data.name)
-            console.log(user)
-            navigate('/hoje')
-        })
-        promise.catch((err) => {
-            setDisabled(false)
-            alert(err.response.statusText)
-        })
+        APIAuth.login(data)
+            .then((res) => {
+                console.log(res.data)
+                const { id, name, image, token } = res.data
+                setUser({ id, name, image, token })
+                console.log(user)
+                navigate('/hoje')
+            })
+            .catch((err) => {
+                setLoading(false)
+                alert(err.response.data.message)
+            })
+    }
+
+    function inputData(e) {
+        setData({ ...data, [e.target.name]: e.target.value })
     }
 
     return (
@@ -46,14 +50,16 @@ export default function LogIn() {
             <Inputs>
                 <form onSubmit={login}>
                     <div>
-                        <input data-test="email-input" disabled={disabled} name="email" type="email" placeholder="email" required
-                            value={email} onChange={e => setEmail(e.target.value)} />
+                        <input data-test="email-input" disabled={loading} name="email" type="email" placeholder="email" required
+                            value={data.email} onChange={inputData} />
                     </div>
                     <div>
-                        <input data-test="password-input" disabled={disabled} name="senha" type="password" placeholder="senha" required
-                            value={password} onChange={e => setPassword(e.target.value)} />
+                        <input data-test="password-input" disabled={loading} name="password" type="password" placeholder="senha" required
+                            value={data.password} onChange={inputData} />
                     </div>
-                    <button data-test="login-btn" disabled={disabled} type="submit">Entrar</button>
+                    <button data-test="login-btn" disabled={loading} type="submit">
+                        {loading ? (<ThreeDots width={50} height={50} color="#FFFFFF" />) : ("Entrar")}
+                    </button>
                     <div data-test="signup-link">
                         <Tosignin to="/cadastro">Não tem uma conta? Cadastre-se!</Tosignin>
                     </div>

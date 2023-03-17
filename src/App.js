@@ -5,6 +5,7 @@ import SignIn from "./Components/SignIn";
 import GlobalStyle from "./Style/GlobalStyle"
 import Today from "./Components/InsideApp/Today";
 import UserProvider from "././Components/Context/Context";
+import CircularProvider from "./Components/Context/CircularContext";
 
 export default function App() {
 
@@ -14,14 +15,16 @@ export default function App() {
 
     {/* <Context.Provider value={{ user, setUser, URL }}> */}
     <BrowserRouter>
-      <UserProvider>
-        <GlobalStyle />
-        <Routes>
-          <Route path='/' element={<LogIn />}></Route>
-          <Route path='/cadastro' element={<SignIn />}></Route>
-          <Route path='/hoje' element={<Today />}></Route>
-        </Routes>
-      </UserProvider>
+      <CircularProvider>
+        <UserProvider>
+          <GlobalStyle />
+          <Routes>
+            <Route path='/' element={<LogIn />}></Route>
+            <Route path='/cadastro' element={<SignIn />}></Route>
+            <Route path='/hoje' element={<Today />}></Route>
+          </Routes>
+        </UserProvider>
+      </CircularProvider>
     </BrowserRouter>
 
   </>
