@@ -12,7 +12,8 @@ export default function UserProvider({ children }) {
         if (userjson === null) {
             navigate("/")
         } else {
-            navigate("/hoje")
+            // navigate('/hoje')
+            navigate('/habitos')
         }
     }, [])
 

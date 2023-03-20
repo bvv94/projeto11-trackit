@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components"
+import { Context } from "../Context/Context";
 
 export default function Top() {
+
+    const {user} = useContext(Context)
+
     return (
         <Div>
             <TopBar>
                 <div data-test="header"h>
                     <p>TrackIt</p>
-                    <img scr="https://www.shutterstock.com/image-vector/vector-line-icon-img-260nw-2050481222.jpg" alt="img perfil"></img>
+                    <img scr={user.image} alt="img perfil"></img>
                 </div>
             </TopBar>
         </Div >

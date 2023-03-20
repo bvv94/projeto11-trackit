@@ -31,6 +31,7 @@ export default function LogIn() {
                 setUser({ id, name, image, token })
                 console.log(user)
                 navigate('/hoje')
+                // navigate('/habitos')
             })
             .catch((err) => {
                 setLoading(false)

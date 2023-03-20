@@ -6,6 +6,7 @@ import GlobalStyle from "./Style/GlobalStyle"
 import Today from "./Components/InsideApp/Today";
 import UserProvider from "././Components/Context/Context";
 import CircularProvider from "./Components/Context/CircularContext";
+import HabitScreen from "./Components/InsideApp/HabitScreen";
 
 export default function App() {
 
@@ -22,6 +23,7 @@ export default function App() {
             <Route path='/' element={<LogIn />}></Route>
             <Route path='/cadastro' element={<SignIn />}></Route>
             <Route path='/hoje' element={<Today />}></Route>
+            <Route path="/habitos" element={<HabitScreen />} />
           </Routes>
         </UserProvider>
       </CircularProvider>

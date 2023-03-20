@@ -1,22 +1,23 @@
 import Top from "./Top"
-import React, { useContext } from "react";
+import React, { useContext, useEffect} from "react";
 import MenuBottom from "./MenuBottom"
 import styled from "styled-components"
 import { useState } from "react"
 import bin from "../../assets/Vector.png"
-import Newhabit from "./NewHabit";
+import Newhabit from "./HabitScreen";
 import { CircularContext } from "../Context/CircularContext";
 import { Context } from "../Context/Context";
+import APIToday from "../../API's/APIToday";
 
 export default function Today() {
 
     const empty = "Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!"
     // const [habit, setHabit] = useState("Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!");
-    const [habit, setHabit] = useState("");
+    const [habit, setHabit] = useState([]);
+    const [loading, setLoading] = useState(true)
     const {user} = useContext(Context)
-    const [counter, setCounter] = useContext(CircularContext);
-    const [add, setAdd] = useState(false)
-    const {circular, setCircular} = useContext(CircularContext)
+    const {counter, setCounter} = useContext(CircularContext);
+    // const [add, setAdd] = useState(false)
     const week = [
         { day: 'D', number: 7 },
         { day: 'S', number: 1 },
@@ -27,16 +28,31 @@ export default function Today() {
         { day: 'S', number: 6 }
     ]
 
+    useEffect (addhabit, [])
 
     function addhabit() {
+        console.log("Adicionando o hábito")        
+        APIToday.getToday(user.token)
+            .then( res => {
+                setLoading(false)
+                const apiHabit = res.data;
+                setHabit(apiHabit)
 
-        setCounter(counter = counter + 1);
+                const habitsDone = apiHabit.filter (h=> h.done === true)
 
-        console.log("Adicionando o hábito")
-        console.log(add)
-        setAdd(!add);
-        console.log(add)
+                const perc = ((habitsDone.lenght / apiHabit.lenght)*100).toFixed(0)
+                setCounter(perc)
+            })
+            .catch(err => {
+                setLoading(false)
+                if (!user.token) {
+                    alert("Faça login")
+                } else {
+                    alert(err.response.data.message)
+                }
 
+            })
+        
         return (
             <>
                 <div>
